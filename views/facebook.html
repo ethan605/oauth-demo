@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Facebook Login - OAuth Demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1058494070866020',
+        xfbml      : true,
+        version    : 'v2.7',
+        cookie     : true
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+</head>
+<body>
+  <div id="fb-root"></div>
+  <p id="connect">
+    <a href="#">Connect to Facebook!</a>
+  </p>
+  <div id="results" hidden>
+    <p><strong>ID: </strong><span id="uid"></span></p>
+    <p><strong>Name: </strong><span id="display-name"></span></p>
+    <p><strong>Image: </strong><img id="profile-image" src="" /></p>
+    <p><strong>Access token: </strong><span id="access-token"></span></p>
+  </div>
+  <script type="text/javascript">
+    $('a').click(function(e) {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          $('#connect').html('Connected! Hitting OmniAuth callback (GET /auth/facebook/callback)...');
+          
+          $.getJSON('/auth/facebook/callback', function(user) {
+            $('#connect').html('Connected! Callback complete.');
+
+            $('#uid').html(user.uid)
+            $('#display-name').html(user.info.name)
+            $('#profile-image').attr('src', user.info.image)
+            $('#access-token').html(user.credentials.token)
+
+            $('#results').show(500)
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
