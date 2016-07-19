@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Google+ Login - OAuth Demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+  <div id="fb-root"></div>
+  <p id="connect">
+    <a href="#">Đăng nhập với Google</a>
+  </p>
+  <div id="results" hidden>
+    <p><strong>ID: </strong><span id="uid"></span></p>
+    <p><strong>Name: </strong><span id="display-name"></span></p>
+    <p><strong>Image: </strong><img id="profile-image" src="" /></p>
+    <p><strong>Access token: </strong><span id="access-token"></span></p>
+  </div>
+  <script type="text/javascript">
+    $('a').click(function(e) {
+      window.open('/auth/google_oauth2');
+    });
+  </script>
+</body>
+</html>
